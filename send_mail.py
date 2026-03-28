@@ -1,9 +1,13 @@
 import smtplib
 import os
 
-sender = "your_email@gmail.com"
-receiver = "other_email@gmail.com"
+sender = "admin_email@gmail.com"
+receiver = "user_email@gmail.com"
 password = os.getenv("EMAIL_PASS")
+
+if password is None:
+    print("Error: EMAIL_PASS not set")
+    exit()
 
 message = "Subject: ALERT\n\nSuspicious login activity detected!"
 
