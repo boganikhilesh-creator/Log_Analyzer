@@ -2,9 +2,8 @@ import smtplib
 import os
 
 sender = "your_email@gmail.com"
-receiver = "your_email@gmail.com"
+receiver = "other_email@gmail.com"
 password = os.getenv("EMAIL_PASS")
-receiver = "boganikhilesh08@gmail.com"
 
 message = "Subject: ALERT\n\nSuspicious login activity detected!"
 
