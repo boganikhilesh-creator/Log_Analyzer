@@ -4,15 +4,19 @@
 
 #define MAX_USERS 100
 
-struct User {
+struct User 
+{
     char name[50];
     int failed;
 };
 
-struct Account {
+struct Account 
+{
     char username[50];
     char password[50];
-} accounts[] = {
+} 
+accounts[] = 
+{
     {"Koushik", "pass1"},
     {"Nikhilesh", "pass2"},
     {"Adesh", "admin123"}
@@ -20,8 +24,10 @@ struct Account {
 
 int totalAccounts = 3;
 
-int findUser(struct User users[], int count, char name[]) {
-    for (int i = 0; i < count; i++) {
+int findUser(struct User users[], int count, char name[]) 
+{
+    for (int i = 0; i < count; i++) 
+    {
         if (strcmp(users[i].name, name) == 0)
             return i;
     }
@@ -47,11 +53,13 @@ int checkLogin(char uname[], char pwd[])
     return 0;
 }
 
-int main() {
+int main() 
+{
     FILE *fp;
 
     fp = fopen("log.txt", "w");
-    if (fp == NULL) {
+    if (fp == NULL) 
+    {
         printf("Error creating log file!\n");
         return 1;
     }
@@ -63,14 +71,16 @@ int main() {
     printf("Type 'stop' to analyze logs\n");
     printf("Type 'clear' to reset logs\n\n");
 
-    while (1) {
+    while (1) 
+    {
         printf("Enter username: ");
         scanf("%s", username);
 
         if (strcmp(username, "stop") == 0)
             break;
 
-        if (strcmp(username, "clear") == 0) {
+        if (strcmp(username, "clear") == 0)
+        {
             fp = fopen("log.txt", "w");
             fclose(fp);
             printf("Log cleared!\n");
@@ -84,15 +94,18 @@ int main() {
 
         int result = checkLogin(username, password);
 
-        if (result == 1) {
+        if (result == 1)
+        {
             printf("Login Success\n");
             fprintf(fp, "LOGIN SUCCESS %s\n", username);
         }
-        else if (result == 2) {
+        else if (result == 2) 
+        {
             printf("Incorrect Password\n");
             fprintf(fp, "LOGIN FAILED %s\n", username);
         }
-        else {
+        else
+        {
             printf("No such user exists\n");
             fprintf(fp, "LOGIN FAILED UNKNOWN_%s\n", username);
         }
@@ -107,19 +120,22 @@ int main() {
 
     char line[100], status[20], user[50];
 
-    while (fgets(line, sizeof(line), fp)) {
+    while (fgets(line, sizeof(line), fp)) 
+    {
         sscanf(line, "LOGIN %s %s", status, user);
 
         int index = findUser(users, userCount, user);
 
-        if (index == -1) {
+        if (index == -1) 
+        {
             strcpy(users[userCount].name, user);
             users[userCount].failed = 0;
             index = userCount;
             userCount++;
         }
 
-        if (strcmp(status, "FAILED") == 0) {
+        if (strcmp(status, "FAILED") == 0)
+        {
             users[index].failed++;
         }
     }
@@ -128,10 +144,12 @@ int main() {
 
     printf("\n===== LOGIN ANALYSIS REPORT =====\n");
 
-    for (int i = 0; i < userCount; i++) {
+    for (int i = 0; i < userCount; i++)
+    {
         printf("User: %s | Failed Attempts: %d", users[i].name, users[i].failed);
 
-        if (users[i].failed >= 3) {
+        if (users[i].failed >= 3) 
+        {
             printf(" Suspicious Activity!");
 
             system("python send_mail.py");
@@ -142,3 +160,4 @@ int main() {
 
     return 0;
 }
+
