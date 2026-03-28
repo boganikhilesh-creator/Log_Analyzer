@@ -134,7 +134,7 @@ int main() {
         if (users[i].failed >= 3) {
             printf(" Suspicious Activity!");
 
-            system("send_mail.py");
+            system("python send_mail.py");
         }
 
         printf("\n");
